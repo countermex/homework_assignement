@@ -25,7 +25,7 @@ module.exports = {
     'react',
     'react-hooks'
   ],
-  ignorePatterns: ['.eslintrc.*'],
+  ignorePatterns: ['.eslintrc.*', 'cypress/**/*', 'cypress.config.ts'],
   rules: {
     'no-param-reassign': 0,
     'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx', '.tsx'] }],
