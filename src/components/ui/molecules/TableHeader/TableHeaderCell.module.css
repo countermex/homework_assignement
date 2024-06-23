@@ -1,0 +1,15 @@
+.th {
+  padding: 5px
+}
+
+.th_left {
+  text-align: left;
+}
+
+.th_center {
+  text-align: center;
+}
+
+.th_right {
+  text-align: right;
+}
