@@ -4,21 +4,19 @@ Node.js v20.15.0
 
 ## Project Installation
 
-If you are using npm:
-  npm install
-If you are using yarn: 
-  yarn
+To install project dependencies:
+  - yarn
 
 ## Starting the Project
 
-If you are using npm:
-  npm run dev
-If you are using yarn: 
-  yarn dev
+To run the project:
+  - yarn dev
 
 ## Running Tests
 
-npx cypress run
+To run the tests:
+ - yarn dev
+ - npx cypress run
 
 ### Table Component API
 
