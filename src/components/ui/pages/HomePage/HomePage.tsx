@@ -3,6 +3,8 @@ import { Download } from 'react-feather';
 import Header from '../../molecules/Header/Header';
 import Button from '../../atoms/Button/Button';
 import Table from '../../templates/Table/Table';
+import styles from './HomePage.module.css';
+import Checkbox from '../../atoms/Checkbox/Checkbox';
 import dataJson from '../../../../assets/data.json';
 
 const HomePage = () => {
@@ -47,12 +49,11 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <Header>
-        <input
-          type="checkbox"
-          onChange={handleSelectAllChange}
-          ref={checkboxRef}
+        <Checkbox
+          onClick={handleSelectAllChange}
+          inputRef={checkboxRef}
         />
         <span>{selected.length === 0 ? 'None Selected' : `Selected ${selected.length}`}</span>
         <Button onClick={handleClick} disabled={selected.length === 0} icon={<Download />}>
@@ -62,13 +63,13 @@ const HomePage = () => {
       <Table
         rows={dataJson}
         selectable
-        headers={['Name', 'Device', 'Path', 'Status']}
+        headers={['name', 'device', 'path', 'status']}
         onSelect={handleSelect}
-        highlightedCell="available"
-        capitalizedCell="status"
+        highlightedCells={['available']}
+        capitalizedCells={['status']}
         selected={selected}
       />
-    </>
+    </div>
   );
 };
 

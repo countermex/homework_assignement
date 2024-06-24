@@ -1,30 +1,65 @@
-# React + TypeScript + Vite
+# Prerequisites
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Node.js v20.15.0
 
-Currently, two official plugins are available:
+## Project Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+If you are using npm:
+  npm install
+If you are using yarn: 
+  yarn
 
-## Expanding the ESLint configuration
+## Starting the Project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+If you are using npm:
+  npm run dev
+If you are using yarn: 
+  yarn dev
 
-- Configure the top-level `parserOptions` property like this:
+## Running Tests
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+npx cypress run
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Table Component API
+
+rows - Represents the data of the table: 
+  - Type: { [key: string]: string }[]
+  - Required: Yes
+
+headers - Array of strings, generating the header columns
+  - Type: string[]
+  - Required: Yes
+
+selectable - boolean whether the rows should have a selectbox
+  - Type: boolean
+  - Required: No
+
+selected - ID representation of selected rows
+  - Type: string[]
+  - Required: No
+
+caption - A string to be displayed as the table caption.
+  - Type: string
+  - Required: No
+
+capitalizedCells - Strings representing the columns whose cells should be capitalized.
+  - Type: string[]
+  - Required: No
+
+highlightedCells - Strings representing the values cells for which cells should be highlighted
+  - Type: string[]
+  - Required: No
+
+onSelect - Callback function when selection changes
+  - Type: (selected: string[]) => void
+  - Required: No
+
+### Styling
+
+The component uses CSS modules for styles
+
+### Next Steps/Outlook
+
+Extend Test coverage to further enhance robustness and reliability. Due to time constraints only e2e tests were conducted, covering the most important functionalities. 
+  - Implement Unit Tests
+  - Implement Integration Tests

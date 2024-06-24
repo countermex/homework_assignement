@@ -4,7 +4,7 @@
 
 .td_highlight::before {
   content: "●";
-  color: green;
+  color: rgb(39, 207, 39);
   position:absolute;
   transform: translateX(-150%);
 }

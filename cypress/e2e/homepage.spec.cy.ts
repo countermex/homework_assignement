@@ -12,11 +12,11 @@ describe('HomePage', () => {
   });
 
   it('should allow selecting and deselecting all items', () => {
-    cy.get('._header_ek8z3_1 > input').check();
+    cy.get('header > input').check();
     cy.get('#netsh\\.exe').should('be.checked');
     cy.get('#uxtheme\\.dll').should('be.checked');
 
-    cy.get('._header_ek8z3_1 > input').uncheck();
+    cy.get('header > input').uncheck();
     cy.get('#netsh\\.exe').should('not.be.checked');
     cy.get('#uxtheme\\.dll').should('not.be.checked');
   });
@@ -39,5 +39,23 @@ describe('HomePage', () => {
   it('should allow individual row selection', () => {
     cy.get('#netsh\\.exe').check();
     cy.get('header span').contains('Selected 1');
+  });
+
+  it('should select checkbox when row is clicked', () => {
+    cy.get(':nth-child(3) > [headers="name"]').click();
+    cy.get('#netsh\\.exe').should('be.checked');
+  });
+
+  it('should deselect checkbox when row with selected checkbox is clicked', () => {
+    cy.get(':nth-child(3) > [headers="name"]').click();
+    cy.get('#netsh\\.exe').should('be.checked');
+    cy.get(':nth-child(3) > [headers="name"]').click();
+    cy.get('#netsh\\.exe').should('not.be.checked');
+  });
+
+  it('should show text-transform capitalize in Status column', () => {
+    cy.get('[headers="status"]').each((element) => {
+      cy.wrap(element).should('have.css', 'text-transform', 'capitalize')
+    })
   });
 });

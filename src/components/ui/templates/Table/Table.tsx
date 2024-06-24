@@ -3,14 +3,16 @@ import styles from './Table.module.css';
 import TableHeader from '../../organisms/TableHeader/TableHeader';
 import TableRow from '../../organisms/TableRow/TableRow';
 import TableCell from '../../molecules/TableCell/TableCell';
+import Checkbox from '../../atoms/Checkbox/Checkbox';
 
 const Table = (props:{
   rows: { [key: string]: string }[],
+  headers: string[],
   selectable?: boolean,
-  headers?: string[],
   selected?: string[],
-  capitalizedCell?: string,
-  highlightedCell?: string,
+  caption?: string,
+  capitalizedCells?: string[],
+  highlightedCells?: string[],
   onSelect?: (selected: string[]) => void,
 }) => {
   const handleSelectionChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,38 +25,45 @@ const Table = (props:{
     }
   };
 
+  const handleClick = (firstValue: string) => {
+    if (props.onSelect && props.selected) {
+      if (props.selected?.includes(firstValue)) {
+        props.onSelect(props.selected.filter((selectedId) => selectedId !== firstValue));
+      } else {
+        props.onSelect([...props.selected, firstValue]);
+      }
+    }
+  };
+
   return (
     <table className={styles.table}>
+      {props.caption && (
+        <caption>
+          {props.caption}
+        </caption>
+      )}
       <tbody>
-        {props.headers && <TableHeader keys={props.selectable ? ['', ...props.headers] : props.headers} />}
+        <TableHeader keys={props.selectable ? ['', ...props.headers] : props.headers} />
         {
           props.rows.map((rowData, index) => {
             const firstValue = Object.values(rowData)[0];
+            const disabled = rowData.status !== 'available';
             return (
-              <TableRow key={index}>
+              <TableRow key={index} selected={props?.selected?.includes(firstValue)} onClick={disabled ? undefined : () => handleClick(firstValue)}>
                 {props.selectable && (
                 <TableCell headers="checkbox">
-                  <input
-                    type="checkbox"
-                    name={firstValue}
-                    id={firstValue}
-                    onChange={handleSelectionChange}
-                    checked={props?.selected?.includes(Object.values(rowData)[0])}
-                    disabled={rowData.status !== 'available'}
-                  />
+                  <Checkbox value={firstValue} onClick={handleSelectionChange} disabled={disabled} checked={props?.selected?.includes(firstValue)} />
                 </TableCell>
                 )}
-                {
-                  Object.entries(rowData).map((cellData) => {
-                    const highlight = cellData[1] === props.highlightedCell;
-                    const capitalize = cellData[0] === props.capitalizedCell;
-                    return (
-                      <TableCell headers={cellData[0]} key={crypto.randomUUID()} highlight={highlight} capitalize={capitalize}>
-                        {cellData[1]}
-                      </TableCell>
-                    );
-                  })
-                }
+                {props.headers?.map((column) => {
+                  const highlight = props.highlightedCells?.includes(rowData[column]);
+                  const capitalize = props.capitalizedCells?.includes(column);
+                  return (
+                    <TableCell headers={column} key={crypto.randomUUID()} highlight={highlight} capitalize={capitalize}>
+                      {rowData[column] || ''}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             );
           })
